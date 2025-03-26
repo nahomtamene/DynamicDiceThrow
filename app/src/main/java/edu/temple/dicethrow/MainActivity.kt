@@ -1,5 +1,6 @@
 package edu.temple.dicethrow
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +28,24 @@ class MainActivity : AppCompatActivity(), ButtonFragment.ButtonInterface {
             - Show _only_ ButtonFragment if portrait
             - show _both_ fragments if Landscape
           */
-    }
+        if (savedInstanceState == null) {
+            val orientation = resources.configuration.orientation
 
+            if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container1, ButtonFragment())
+                    .add(R.id.container1, DieFragment())
+                    .commit()
+            } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container1, ButtonFragment())
+                    .replace(R.id.container2, DieFragment())
+                    .commit()
+            }
+
+
+        }
+    }
     /* TODO 2: switch fragments if die rolled and in portrait (no need to switch fragments if Landscape)
         */
 
